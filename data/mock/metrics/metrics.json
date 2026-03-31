@@ -1,0 +1,21 @@
+[
+  {
+    "timestamp": "2026-03-30T14:01:00",
+    "cpu": 78,
+    "memory": 71,
+    "latency_ms": 920
+  },
+  {
+    "timestamp": "2026-03-30T14:02:00",
+    "cpu": 92,
+    "memory": 85,
+    "latency_ms": 1680
+  },
+  {
+    "timestamp": "2026-03-30T14:03:00",
+    "cpu": 89,
+    "memory": 82,
+    "latency_ms": 1420
+  }
+]
+

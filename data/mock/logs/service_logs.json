@@ -1,0 +1,15 @@
+[
+  {
+    "timestamp": "2026-03-30T14:02:20",
+    "service": "trade-service",
+    "level": "ERROR",
+    "message": "request timeout after 8s on /api/transaction/commit"
+  },
+  {
+    "timestamp": "2026-03-30T14:02:40",
+    "service": "db-proxy",
+    "level": "ERROR",
+    "message": "数据库连接池耗尽，等待队列超过阈值"
+  }
+]
+

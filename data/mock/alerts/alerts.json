@@ -1,0 +1,19 @@
+[
+  {
+    "id": "ALT-001",
+    "timestamp": "2026-03-30T14:02:00",
+    "level": "critical",
+    "source": "trade-service",
+    "type": "latency_spike",
+    "summary": "核心交易接口延迟超阈值"
+  },
+  {
+    "id": "ALT-002",
+    "timestamp": "2026-03-30T14:03:00",
+    "level": "high",
+    "source": "dashboard",
+    "type": "ui_error",
+    "summary": "监控大屏出现异常弹窗"
+  }
+]
+

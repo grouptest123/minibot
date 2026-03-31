@@ -1,0 +1,341 @@
+:root {
+  --bg: #06131f;
+  --panel: rgba(10, 25, 39, 0.82);
+  --panel-strong: rgba(7, 18, 30, 0.92);
+  --ink: #e8f0f7;
+  --muted: #8ca2b7;
+  --line: rgba(151, 176, 196, 0.16);
+  --brand: #2dd4bf;
+  --brand-deep: #0f766e;
+  --danger: #ef4444;
+  --cyan: #60a5fa;
+}
+
+body {
+  color: var(--ink);
+  background:
+    radial-gradient(circle at 0% 0%, rgba(45, 212, 191, 0.16), transparent 24%),
+    radial-gradient(circle at 100% 0%, rgba(96, 165, 250, 0.14), transparent 28%),
+    linear-gradient(180deg, #06131f 0%, #091a2a 45%, #081521 100%);
+}
+
+.pro-sidebar {
+  background:
+    linear-gradient(180deg, rgba(3, 12, 20, 0.98), rgba(6, 20, 31, 0.94)),
+    var(--panel-strong);
+  border-right: 1px solid var(--line);
+  gap: 22px;
+}
+
+.sidebar-top h1 {
+  margin: 8px 0 8px;
+  font-size: 34px;
+  line-height: 1.05;
+}
+
+.sidebar-subtitle {
+  margin: 0;
+  color: var(--muted);
+  line-height: 1.5;
+}
+
+.status-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 10px;
+  border-radius: 999px;
+  background: rgba(45, 212, 191, 0.12);
+  color: #c9fff7;
+  font-size: 13px;
+}
+
+.status-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--brand);
+  box-shadow: 0 0 12px rgba(45, 212, 191, 0.8);
+}
+
+.status-grid {
+  margin-top: 14px;
+  display: grid;
+  gap: 12px;
+}
+
+.status-grid small {
+  display: block;
+  color: var(--muted);
+  margin-bottom: 4px;
+}
+
+.nav-list a {
+  border: 1px solid transparent;
+  color: #d9e8f5;
+}
+
+.nav-list a.router-link-active {
+  background: linear-gradient(135deg, rgba(45, 212, 191, 0.16), rgba(96, 165, 250, 0.15));
+  border-color: rgba(45, 212, 191, 0.24);
+}
+
+.top-banner {
+  margin-bottom: 18px;
+  padding: 18px 22px;
+  border-radius: 22px;
+  background: linear-gradient(135deg, rgba(12, 31, 47, 0.96), rgba(9, 23, 36, 0.96));
+  border: 1px solid var(--line);
+  display: flex;
+  justify-content: space-between;
+  gap: 18px;
+  align-items: center;
+}
+
+.top-banner h2 {
+  margin: 8px 0 0;
+  font-size: 24px;
+}
+
+.banner-badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.banner-badges span,
+.section-caption,
+.hero-metric span,
+.signal-stat span,
+.pipeline-card small {
+  padding: 0;
+  color: var(--muted);
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+}
+
+.banner-badges span {
+  padding: 8px 12px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid var(--line);
+  color: #d3e5f3;
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+.hero-board,
+.event-hero {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr;
+  gap: 18px;
+  align-items: end;
+  background:
+    radial-gradient(circle at right top, rgba(45, 212, 191, 0.18), transparent 24%),
+    linear-gradient(145deg, rgba(13, 31, 47, 0.96), rgba(8, 19, 30, 0.96));
+}
+
+.hero-main h2 {
+  margin: 10px 0;
+  font-size: 40px;
+  line-height: 1.05;
+}
+
+.hero-subtitle {
+  color: var(--muted);
+  line-height: 1.6;
+}
+
+.hero-metrics,
+.compact-metrics {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.hero-metric,
+.signal-stat,
+.pipeline-card,
+.insight-card,
+.workflow-node,
+.stage-card,
+.mini-node,
+.keyframe-card,
+.visual-summary-card,
+.fusion-content {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid var(--line);
+  border-radius: 20px;
+}
+
+.hero-metric {
+  padding: 16px;
+}
+
+.hero-metric-danger {
+  background: linear-gradient(180deg, rgba(239, 68, 68, 0.16), rgba(255, 255, 255, 0.03));
+}
+
+.hero-metric strong,
+.signal-stat strong,
+.pipeline-card strong {
+  display: block;
+  margin-top: 10px;
+  font-size: 30px;
+}
+
+.hero-metric small,
+.pipeline-card p,
+.insight-card p,
+.workflow-node p,
+.stage-card small,
+.visual-summary-card p,
+.visual-summary-card small,
+.keyframe-card p {
+  color: var(--muted);
+}
+
+.dashboard-grid,
+.events-grid {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  gap: 18px;
+}
+
+.dashboard-grid > *,
+.events-grid > * {
+  grid-column: span 12;
+}
+
+.pipeline-grid,
+.insight-grid,
+.keyframe-grid,
+.workflow-ladder,
+.stage-flow.wide {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 14px;
+}
+
+.pipeline-card,
+.insight-card,
+.workflow-node,
+.stage-card,
+.mini-node,
+.keyframe-card,
+.visual-summary-card {
+  padding: 16px;
+}
+
+.pipeline-card[data-tone="accent"] {
+  border-color: rgba(45, 212, 191, 0.24);
+}
+
+.pipeline-card[data-tone="high"] {
+  border-color: rgba(239, 68, 68, 0.28);
+}
+
+.stat-band {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+  margin-bottom: 14px;
+}
+
+.signal-stat {
+  padding: 16px;
+}
+
+.mini-timeline {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 12px;
+}
+
+.mini-node span,
+.fusion-time {
+  color: var(--brand);
+  font-size: 12px;
+}
+
+.confidence-bar,
+.signal-bar {
+  height: 10px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.08);
+  overflow: hidden;
+}
+
+.confidence-fill,
+.signal-fill {
+  height: 100%;
+  border-radius: inherit;
+  background: linear-gradient(90deg, var(--brand), var(--cyan));
+}
+
+.fusion-board {
+  display: grid;
+  gap: 12px;
+}
+
+.fusion-event {
+  display: grid;
+  grid-template-columns: 74px 1fr;
+  gap: 14px;
+  align-items: start;
+}
+
+.signal-stack {
+  display: grid;
+  gap: 12px;
+}
+
+.signal-row {
+  display: grid;
+  grid-template-columns: 90px 1fr 64px;
+  gap: 12px;
+  align-items: center;
+}
+
+.keyframe-card img,
+.frame-placeholder {
+  width: 100%;
+  height: 170px;
+  object-fit: cover;
+  border-radius: 16px;
+  background: linear-gradient(135deg, rgba(45, 212, 191, 0.08), rgba(96, 165, 250, 0.08));
+}
+
+.frame-placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--muted);
+}
+
+.report-content {
+  background: rgba(255, 255, 255, 0.03);
+  color: #d9e8f5;
+}
+
+.el-table {
+  --el-table-tr-bg-color: transparent;
+  --el-table-row-hover-bg-color: rgba(255, 255, 255, 0.04);
+  --el-table-header-bg-color: rgba(255, 255, 255, 0.04);
+  --el-table-border-color: rgba(151, 176, 196, 0.12);
+  --el-table-text-color: #e8f0f7;
+  --el-table-header-text-color: #9cb2c6;
+  background: transparent;
+}
+
+@media (max-width: 1100px) {
+  .hero-board,
+  .event-hero,
+  .top-banner,
+  .hero-metrics,
+  .compact-metrics,
+  .stat-band {
+    grid-template-columns: 1fr;
+  }
+}

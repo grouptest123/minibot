@@ -1,0 +1,98 @@
+from ..schemas import SkillDefinition
+
+
+def list_skills() -> list[SkillDefinition]:
+    common = {"supports_mock": True, "fallback_strategy": "使用规则引擎与模板输出降级"}
+    return [
+        SkillDefinition(
+            name="duty_overview_skill",
+            description="汇总当前值班态势与关键风险",
+            trigger_condition="用户询问总览、今日异常、当前风险",
+            input_schema={"type": "object", "properties": {"window": {"type": "string"}}},
+            output_schema={"type": "object", "properties": {"risk_level": {"type": "string"}}},
+            dependencies=["metric_query", "alert_query", "log_search"],
+            **common,
+        ),
+        SkillDefinition(
+            name="alert_analysis_skill",
+            description="针对某个告警窗口做多源分析",
+            trigger_condition="用户询问某时刻告警或异常",
+            input_schema={"type": "object", "properties": {"timestamp": {"type": "string"}}},
+            output_schema={"type": "object", "properties": {"events": {"type": "array"}}},
+            dependencies=["alert_query", "log_search", "screenshot_reader"],
+            **common,
+        ),
+        SkillDefinition(
+            name="metric_trend_skill",
+            description="分析指标趋势并输出风险态势",
+            trigger_condition="用户询问趋势、波动、阈值",
+            input_schema={"type": "object", "properties": {"range": {"type": "string"}}},
+            output_schema={"type": "object", "properties": {"trend": {"type": "string"}}},
+            dependencies=["metric_query"],
+            **common,
+        ),
+        SkillDefinition(
+            name="video_status_skill",
+            description="分析视频值守状态",
+            trigger_condition="用户询问人员在岗、离岗、睡岗",
+            input_schema={"type": "object", "properties": {"window": {"type": "string"}}},
+            output_schema={"type": "object", "properties": {"status": {"type": "string"}}},
+            dependencies=[],
+            **common,
+        ),
+        SkillDefinition(
+            name="screenshot_analysis_skill",
+            description="分析页面截图中的异常状态",
+            trigger_condition="用户询问页面异常、截图异常",
+            input_schema={"type": "object", "properties": {"window": {"type": "string"}}},
+            output_schema={"type": "object", "properties": {"issues": {"type": "array"}}},
+            dependencies=["screenshot_reader"],
+            **common,
+        ),
+        SkillDefinition(
+            name="decision_advice_skill",
+            description="生成处置建议",
+            trigger_condition="用户询问建议、排查、上报",
+            input_schema={"type": "object", "properties": {"event_id": {"type": "string"}}},
+            output_schema={"type": "object", "properties": {"advices": {"type": "array"}}},
+            dependencies=["case_retrieval"],
+            **common,
+        ),
+        SkillDefinition(
+            name="daily_report_skill",
+            description="生成日报",
+            trigger_condition="用户要求生成今日日报",
+            input_schema={"type": "object", "properties": {}},
+            output_schema={"type": "object", "properties": {"report_id": {"type": "integer"}}},
+            dependencies=["report_export"],
+            **common,
+        ),
+        SkillDefinition(
+            name="weekly_report_skill",
+            description="生成周报",
+            trigger_condition="用户要求生成本周周报",
+            input_schema={"type": "object", "properties": {}},
+            output_schema={"type": "object", "properties": {"report_id": {"type": "integer"}}},
+            dependencies=["report_export"],
+            **common,
+        ),
+        SkillDefinition(
+            name="incident_brief_skill",
+            description="生成事件简报",
+            trigger_condition="用户要求针对单事件生成简报",
+            input_schema={"type": "object", "properties": {"event_id": {"type": "string"}}},
+            output_schema={"type": "object", "properties": {"report_id": {"type": "integer"}}},
+            dependencies=["report_export"],
+            **common,
+        ),
+        SkillDefinition(
+            name="kb_retrieval_skill",
+            description="检索值班知识与预案",
+            trigger_condition="用户询问制度、预案、处置手册",
+            input_schema={"type": "object", "properties": {"query": {"type": "string"}}},
+            output_schema={"type": "object", "properties": {"documents": {"type": "array"}}},
+            dependencies=["case_retrieval"],
+            **common,
+        ),
+    ]
+

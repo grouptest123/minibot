@@ -1,0 +1,10 @@
+import { createApp } from "vue";
+import { createPinia } from "pinia";
+import ElementPlus from "element-plus";
+import "element-plus/dist/index.css";
+import App from "./AppShellPro.vue";
+import router from "./router";
+import "./styles.css";
+import "./styles-pro.css";
+
+createApp(App).use(createPinia()).use(router).use(ElementPlus).mount("#app");
