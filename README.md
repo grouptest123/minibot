@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # 智能值班闭环 Demo 系统
 
 面向银行或工业生产环境的值班辅助演示系统，围绕以下闭环运行：
@@ -23,3 +24,7 @@ Docker 启动：
 docker compose up --build
 ```
 
+=======
+# minibot
+This is a mini bot used to test communication
+>>>>>>> 32a99d153fcfe621fa774048843f0a2e9bfc97b7
