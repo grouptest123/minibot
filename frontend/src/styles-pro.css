@@ -329,13 +329,191 @@ body {
   background: transparent;
 }
 
+.interactive-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.interactive-card {
+  padding: 18px;
+  text-align: left;
+  color: var(--ink);
+  cursor: pointer;
+  border-radius: 20px;
+  border: 1px solid var(--line);
+  background: rgba(255, 255, 255, 0.04);
+  transition: transform 160ms ease, border-color 160ms ease, box-shadow 160ms ease;
+}
+
+.interactive-card:hover {
+  transform: translateY(-2px);
+  border-color: rgba(45, 212, 191, 0.32);
+  box-shadow: 0 18px 32px rgba(3, 10, 18, 0.18);
+}
+
+.interactive-card small,
+.interactive-action,
+.subheading,
+.report-meta span {
+  color: var(--muted);
+}
+
+.interactive-card strong {
+  display: block;
+  margin: 10px 0 8px;
+  font-size: 28px;
+}
+
+.interactive-card p {
+  margin: 0 0 12px;
+  color: var(--muted);
+  line-height: 1.6;
+}
+
+.interactive-action {
+  font-size: 13px;
+}
+
+.overview-two-column {
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
+  gap: 16px;
+}
+
+.chart-card,
+.table-card,
+.signal-panel {
+  padding: 16px;
+  border-radius: 20px;
+  border: 1px solid var(--line);
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.subheading {
+  display: block;
+  margin-bottom: 10px;
+  font-size: 14px;
+}
+
+.signal-stat-list {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+  margin-bottom: 14px;
+}
+
+.compact-keyframe-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.dialog-block {
+  display: grid;
+  gap: 18px;
+}
+
+.dialog-summary {
+  padding: 16px;
+  border-radius: 18px;
+  border: 1px solid var(--line);
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.dialog-summary p {
+  margin: 8px 0 0;
+  color: var(--muted);
+}
+
+.stream-grid,
+.modality-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.stream-card,
+.modality-card,
+.decision-item {
+  padding: 16px;
+  border-radius: 18px;
+  border: 1px solid var(--line);
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.stream-head,
+.decision-item {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  align-items: center;
+}
+
+.stream-video,
+.stream-placeholder {
+  width: 100%;
+  height: 240px;
+  margin: 12px 0;
+  border-radius: 16px;
+  background: linear-gradient(135deg, rgba(45, 212, 191, 0.08), rgba(96, 165, 250, 0.08));
+}
+
+.stream-placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--muted);
+  padding: 0 20px;
+  text-align: center;
+}
+
+.modality-card span,
+.report-meta span {
+  font-size: 13px;
+}
+
+.modality-card strong {
+  display: block;
+  margin-top: 10px;
+  font-size: 20px;
+}
+
+.decision-list {
+  display: grid;
+  gap: 12px;
+}
+
+.decision-item p {
+  margin: 8px 0 0;
+  color: var(--muted);
+}
+
+.report-toolbar,
+.report-actions,
+.download-actions,
+.report-meta {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.report-toolbar,
+.report-meta {
+  margin-bottom: 14px;
+}
+
 @media (max-width: 1100px) {
   .hero-board,
   .event-hero,
   .top-banner,
   .hero-metrics,
   .compact-metrics,
-  .stat-band {
+  .stat-band,
+  .interactive-grid,
+  .overview-two-column,
+  .signal-stat-list,
+  .stream-grid,
+  .modality-grid {
     grid-template-columns: 1fr;
   }
 }

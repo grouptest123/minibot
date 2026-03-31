@@ -8,7 +8,7 @@ from ..schemas import ChatResponse
 from .anomaly_runtime import detect_anomalies
 from .decision_runtime import generate_advices
 from .fusion_runtime import build_observation_windows
-from .reports import current_label, save_report
+from .reports_runtime import current_label, save_report
 from .tooling import run_tool
 
 

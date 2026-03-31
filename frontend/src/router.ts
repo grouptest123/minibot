@@ -1,8 +1,8 @@
 import { createRouter, createWebHistory } from "vue-router";
-import DashboardView from "./views/DashboardProView.vue";
-import EventsView from "./views/EventsProView.vue";
-import ReportsView from "./views/ReportsProView.vue";
-import AssistantView from "./views/AssistantProView.vue";
+import DashboardView from "./views/DashboardCnView.vue";
+import EventsView from "./views/EventsCnView.vue";
+import ReportsView from "./views/ReportsCnView.vue";
+import AssistantView from "./views/AssistantCnView.vue";
 
 export default createRouter({
   history: createWebHistory(),
