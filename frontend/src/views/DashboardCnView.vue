@@ -137,16 +137,26 @@
       </div>
     </section>
 
-    <el-dialog v-model="perceptionVisible" title="感知接入" width="78%">
+    <el-dialog v-model="perceptionVisible" title="感知接入" width="78%" @opened="handlePerceptionOpened" @closed="stopCamera">
       <div class="dialog-block">
         <div class="stream-grid">
-          <div v-for="stream in streams" :key="stream.stream_id" class="stream-card">
+          <div v-for="stream in streamCards" :key="stream.stream_id" class="stream-card">
             <div class="stream-head">
               <strong>{{ stream.name }}</strong>
               <span>{{ stream.status }}</span>
             </div>
-            <video v-if="stream.url" :src="stream.url" controls muted loop playsinline class="stream-video"></video>
-            <div v-else class="stream-placeholder">当前未接入真实视频，可将视频放入指定目录后重启服务。</div>
+            <template v-if="stream.isCamera">
+              <video
+                :ref="bindCameraVideo"
+                autoplay
+                muted
+                playsinline
+                class="stream-video"
+              ></video>
+              <div v-if="cameraError" class="stream-error">{{ cameraError }}</div>
+            </template>
+            <video v-else-if="stream.url" :src="stream.url" controls muted loop playsinline class="stream-video"></video>
+            <div v-else class="stream-placeholder">当前未接入样例视频，可将视频放入指定目录后重启服务。</div>
             <small>{{ stream.source }}</small>
           </div>
         </div>
@@ -155,6 +165,10 @@
             <span>{{ modalityLabel(name) }}</span>
             <strong>{{ modalityStatus(status) }}</strong>
           </div>
+        </div>
+        <div class="dialog-summary">
+          <strong>当前演示采用 6 路接入示意</strong>
+          <p>前 5 路为 mock 视频回放，用于模拟多路值班画面；第 6 路调用本机前置相机，展示真实接入效果。</p>
         </div>
       </div>
     </el-dialog>
@@ -233,19 +247,79 @@
 </template>
 
 <script setup lang="ts">
-import { computed, onMounted, ref } from "vue";
+import { computed, nextTick, onBeforeUnmount, onMounted, ref } from "vue";
 import { api } from "../api";
 import ChartPanel from "../components/ChartPanel.vue";
 
 const overview = ref<any>();
 const events = ref<any[]>([]);
-const streams = ref<any[]>([]);
 const perceptionVisible = ref(false);
 const videoVisible = ref(false);
 const decisionVisible = ref(false);
 const fusionVisible = ref(false);
+const cameraVideo = ref<HTMLVideoElement | null>(null);
+const cameraStream = ref<MediaStream | null>(null);
+const cameraError = ref("");
 
 const selectedEvent = computed(() => events.value[0]);
+const mockVideoUrl = computed(() => {
+  const source = overview.value?.video_digest?.source;
+  const mode = overview.value?.video_digest?.source_mode;
+  if (source && mode === "真实视频") {
+    return `/input-video/${source}`;
+  }
+  return "";
+});
+const streamCards = computed(() => [
+  {
+    stream_id: "mock-1",
+    name: "模拟视频 1",
+    status: "模拟回放",
+    source: mockVideoUrl.value ? "样例值班视频" : "未放入样例视频",
+    url: mockVideoUrl.value,
+    isCamera: false,
+  },
+  {
+    stream_id: "mock-2",
+    name: "模拟视频 2",
+    status: "模拟回放",
+    source: mockVideoUrl.value ? "样例值班视频" : "未放入样例视频",
+    url: mockVideoUrl.value,
+    isCamera: false,
+  },
+  {
+    stream_id: "mock-3",
+    name: "模拟视频 3",
+    status: "模拟回放",
+    source: mockVideoUrl.value ? "样例值班视频" : "未放入样例视频",
+    url: mockVideoUrl.value,
+    isCamera: false,
+  },
+  {
+    stream_id: "mock-4",
+    name: "模拟视频 4",
+    status: "模拟回放",
+    source: mockVideoUrl.value ? "样例值班视频" : "未放入样例视频",
+    url: mockVideoUrl.value,
+    isCamera: false,
+  },
+  {
+    stream_id: "mock-5",
+    name: "模拟视频 5",
+    status: "模拟回放",
+    source: mockVideoUrl.value ? "样例值班视频" : "未放入样例视频",
+    url: mockVideoUrl.value,
+    isCamera: false,
+  },
+  {
+    stream_id: "camera-1",
+    name: "本机前置相机",
+    status: cameraStream.value ? "实时接入" : "待授权",
+    source: "浏览器摄像头",
+    url: "",
+    isCamera: true,
+  },
+]);
 
 const trendOption = computed(() => ({
   tooltip: { trigger: "axis" },
@@ -341,14 +415,60 @@ async function loadEvents() {
   events.value = data;
 }
 
-async function loadStreams() {
-  const { data } = await api.get("/video-streams");
-  streams.value = data;
+function bindCameraVideo(element: Element | null) {
+  cameraVideo.value = element instanceof HTMLVideoElement ? element : null;
+}
+
+async function startCamera() {
+  if (cameraStream.value) {
+    if (cameraVideo.value) {
+      cameraVideo.value.srcObject = cameraStream.value;
+      await cameraVideo.value.play().catch(() => undefined);
+    }
+    return;
+  }
+  if (!navigator.mediaDevices?.getUserMedia) {
+    cameraError.value = "当前浏览器不支持摄像头调用。";
+    return;
+  }
+  try {
+    cameraStream.value = await navigator.mediaDevices.getUserMedia({
+      video: {
+        width: { ideal: 1280 },
+        height: { ideal: 720 },
+      },
+      audio: false,
+    });
+    await nextTick();
+    if (cameraVideo.value) {
+      cameraVideo.value.srcObject = cameraStream.value;
+      await cameraVideo.value.play().catch(() => undefined);
+    } else {
+      cameraError.value = "已获取相机权限，但页面视频节点尚未准备完成，请关闭弹窗后重试。";
+      return;
+    }
+    cameraError.value = "";
+  } catch {
+    cameraStream.value = null;
+    cameraError.value = "相机已授权，但当前页面未成功拉起视频流，请关闭弹窗后重试。";
+  }
+}
+
+function stopCamera() {
+  cameraStream.value?.getTracks().forEach((track) => track.stop());
+  cameraStream.value = null;
+  if (cameraVideo.value) {
+    cameraVideo.value.srcObject = null;
+  }
+}
+
+async function handlePerceptionOpened() {
+  await nextTick();
+  await startCamera();
 }
 
 async function openPanel(title: string) {
   if (title === "感知接入") {
-    await loadStreams();
     perceptionVisible.value = true;
     return;
   }
@@ -405,5 +525,9 @@ function adviceLevelLabel(value: string) {
 
 onMounted(async () => {
   await Promise.all([loadOverview(), loadEvents()]);
+});
+
+onBeforeUnmount(() => {
+  stopCamera();
 });
 </script>

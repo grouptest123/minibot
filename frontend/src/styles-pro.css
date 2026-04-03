@@ -466,6 +466,12 @@ body {
   text-align: center;
 }
 
+.stream-error {
+  margin-top: 10px;
+  color: #fca5a5;
+  font-size: 13px;
+}
+
 .modality-card span,
 .report-meta span {
   font-size: 13px;

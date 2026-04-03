@@ -2,7 +2,7 @@
   <div class="app-shell pro-shell">
     <aside class="sidebar pro-sidebar">
       <div class="sidebar-top">
-        <h1>智能值班闭环</h1>
+        <h1>智能值班</h1>
         <p class="sidebar-subtitle">面向值班态势、异常研判、处置建议与报告生成的演示系统</p>
       </div>
 
